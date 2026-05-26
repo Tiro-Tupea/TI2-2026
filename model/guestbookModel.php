@@ -30,15 +30,48 @@ function addGuestbook(PDO $db,
 ): bool
 {
     // traitement des données backend (SECURITE)
+    $useremail=filter_var($useremail,FILTER_VALIDATE_EMAIL); 
+    $firstname = htmlspecialchars(trim(strip_tags($firstname)));
+    $lastname = htmlspecialchars(trim(strip_tags($lastname)));
+    $phone = htmlspecialchars(trim(strip_tags($phone)));
+    $postcode = htmlspecialchars(trim(strip_tags($postcode)));
+    $message=htmlspecialchars(trim(strip_tags($message)));
+    
+    // on envoie false si il y a une seule erreur
+      if($useremail===false       ||
+    strlen($useremail)>100        ||
+    empty($firstname)             ||
+    strlen($fitsname)<5           ||
+    strlen($full_name)>100        ||
+    empty($lastname)              ||
+    strlen($lastname)<5           ||
+    strlen($lastname)>100         ||
+    empty($phone)                 ||
+    strlen($phone)>2              ||
+    empty($postcode)              ||
+    strlen($postcode)>5           ||
+    empty($message)               ||
+    strlen($message)<5            ||
+    strlen($message)>500   
+    ) return false;
 
+    // préparation de la requête avec des marqueurs non nommés
+    $stmt = $db->prepare("INSERT INTO `commentaire` (`useremail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES (?,?,?,?,?,?);");
+    // attribution des variables
+    // $stmt->bindValue(1,$email,PDO::PARAM_STR);
+    // $stmt->bindValue(2,$full_name);
+    // $stmt->bindValue(3,$title);
+    // $stmt->bindValue(4,$text_comment);
+
+    // insertion
+    $insert = $stmt->execute([$useremail,$firstname,$lastname,$phone,$postcode,$message]);
+    // bonne pratique
+    $stmt->closeCursor();
+    // return envoi true si réussi, false en cas d'échec
+    return $insert;
     // si pas de données complètes ou ne correspondant pas à nos attentes, on renvoie false
     return false;
-    // requête préparée obligatoire !
-
-    // si l'insertion a réussi
-    // on renvoie true
-    // sinon, on renvoie false
-
+   
 }
 
 /***************************
@@ -72,14 +105,19 @@ function getAllGuestbook(PDO $db): array
  * @return int
  * Fonction qui compte le nombre total de messages dans la table 'guestbook'
  */
+
 function getNbTotalGuestbook(PDO $db): int
 {
-
+    $stmt = $db->query("SELECT COUNT(*) FROM `guestbook`");
+    $nb = (int) $stmt->fetchColumn();
+    $stmt->closeCursor();
+    
     // bonne pratique, fermez le curseur,
     // renvoyez le nombre total de messages
-    return 0;
+    return $nb;
 
 }
+
 // SELECTION de messages dans le livre d'or par ordre de date croissante
 // en lien avec la pagination
 /**
@@ -100,7 +138,19 @@ function getGuestbookPagination(PDO $db, int $pageActu=1, int $limit=5): array
     // si la requête a réussi,
     // bonne pratique, fermez le curseur
     // renvoyer le tableau de(s) message(s) (vide si pas de résultats)
-    return [];
+    // requête prépare
+    $stmt = $db->prepare("SELECT * FROM `guestbook` ORDER BY `post_date` DESC LIMIT :offset, :limit;");
+    // utilisation obligatoire de bindParam ou bindValue
+    $stmt->bindValue(":offset",$offset,PDO::PARAM_INT);
+    $stmt->bindValue(":limit",$limit,PDO::PARAM_INT);
+    $stmt->execute();
+    // recupération des resultats en fetch_assoc (voir connexion)
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // bonne pratique
+    $stmt->closeCursor();
+    // retour
+    return $result;
+
 }
 
 # Pour afficher la pagination dans la vue
