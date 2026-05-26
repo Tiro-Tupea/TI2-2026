@@ -5,6 +5,9 @@
 /*
  * Front Controller de la gestion du livre d'or
  */
+# Importer le fichier model qui contient nos fonctions de la table commentaire
+// require ROOT_PROJECT."/model/guestbookModel.php";
+
 
 /*
  * Chargement des dépendances
@@ -12,7 +15,7 @@
 // chargement de configuration
 require_once "../config.php";
 // chargement du modèle de la table guestbook
-require_once URL_BASE . "/model/guestbookModel.php";
+require_once URL_BASE."/model/guestbookModel.php";
 
 /*
  * Connexion à la base de données en utilisant PDO
@@ -21,6 +24,28 @@ require_once URL_BASE . "/model/guestbookModel.php";
  * Activez le mode d'erreur de PDO à Exception et
  * le mode fetch à tableau associatif
  */
+
+try{
+    $connectDB = new PDO(
+        dsn:MARIA_DSN, 
+        username:DB_LOGIN, 
+        password:DB_PWD,
+        // tableau de paramètres de connexion, ici pour recevoir les
+        // résultats des query en tableau associatif
+        // ! seul endroit où on peut créer une connexion permanante
+        options:[
+        // connexion permanante seulement ici, pas avec setAttribute()
+        // PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
+
+    // modification de la connexion en dehors de celle-ci (pour la gestion d'erreurs, valeur par défaut de PDO depuis PHP 8.0)
+    $connectDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+}catch(Exception $e){
+    // arrêt et affichage de l'erreur (en dev)
+    die($e->getMessage());
+}
 
 /*
  * Si le formulaire a été soumis
@@ -60,6 +85,6 @@ require_once URL_BASE . "/model/guestbookModel.php";
 
 // Appel de la vue
 
-include URL_BASE . "/view/guestbookView.php";
+include URL_BASE."/view/guestbookView.php";
 
 // fermeture de la connexion (bonne pratique)
