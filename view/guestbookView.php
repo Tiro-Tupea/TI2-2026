@@ -63,8 +63,8 @@
                     </div>
                     
                     <div class="form">
-                        <label for="useremail">E-mail</label>
-                        <input type="email" name="useremail" id="useremail" value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>" placeholder="Blabla@gmail">
+                        <label for="usermail">E-mail</label>
+                        <input type="email" name="useremail" id="usermail" value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>" placeholder="Blabla@gmail">
 
                         <?php if (!empty($errors['usermail'])): ?>
                             <p class="error"><?= $errors['usermail'] ?></p>
@@ -118,21 +118,7 @@
 
     <section class="right">
         <!-- Si pas de message -->
-        <?php if ($nbCommentaires === 0): ?>
-            <h2>Pas encore de message</h2>
-        <?php elseif ($nbCommentaires === 1): ?>
-            <h2>Il y a 1 commentaire</h2>
-        <?php else: ?>
-            <h2>Il y a <?= $nbCommentaires ?> commentaires</h2>
-        <?php endif; ?>
-
-        <?php foreach ($commentaires as $c): ?>
-            <div class="comment-card">
-                <h3><?= htmlspecialchars($c['firstname'],['lastname']) ?></h3>
-
-                <p><?= nl2br(htmlspecialchars($c['message'])) ?></p>
-            </div>
-        <?php endforeach; ?>
+        <h3>Message</h3>
 
         <!-- Si 1 message -->
         <!-- <h3>Il y a 1 message</h3> -->

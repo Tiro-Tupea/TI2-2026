@@ -47,9 +47,27 @@ try{
 
 /*
  * Si le formulaire a été soumis
- */
+ */        
+
 
 // on appelle la fonction d'insertion dans la DB (addGuestbook())
+    # formulaire envoyé au backend
+    if(isset($_POST['usermail'],$_POST['firstname'],$_POST['lastname'],$_POST['phone'],$_POST['postcode'],$_POST['message'])){
+    // tentative d'insertion (protections dans la fonction)
+    $insert = getAllGuestbook(
+            db:$connectDB,
+            usermail:$_POST['usermail'],
+            firstname:$_POST['firstname'],
+            lastname:$_POST['lastname'],
+            phone:$_POST['phone'],
+            postcode:$_POST['postcode'],
+            message:$_POST['message']  
+            );
+            // redirection vers commentaire
+        header("Location: index.php");
+    }
+
+
 
 // si l'insertion a réussi
 

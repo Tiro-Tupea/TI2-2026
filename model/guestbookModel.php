@@ -30,7 +30,7 @@ function addGuestbook(PDO $db,
 ): bool
 {
     // traitement des données backend (SECURITE)
-    $useremail=filter_var($useremail,FILTER_VALIDATE_EMAIL); 
+    $usermail=filter_var($usermail,FILTER_VALIDATE_EMAIL); 
     $firstname = htmlspecialchars(trim(strip_tags($firstname)));
     $lastname = htmlspecialchars(trim(strip_tags($lastname)));
     $phone = htmlspecialchars(trim(strip_tags($phone)));
@@ -38,8 +38,8 @@ function addGuestbook(PDO $db,
     $message=htmlspecialchars(trim(strip_tags($message)));
     
     // on envoie false si il y a une seule erreur
-      if($useremail===false       ||
-    strlen($useremail)>100        ||
+      if($usermail===false       ||
+    strlen($usermail)>100        ||
     empty($firstname)             ||
     strlen($fitsname)<5           ||
     strlen($full_name)>100        ||
@@ -56,7 +56,7 @@ function addGuestbook(PDO $db,
     ) return false;
 
     // préparation de la requête avec des marqueurs non nommés
-    $stmt = $db->prepare("INSERT INTO `commentaire` (`useremail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES (?,?,?,?,?,?);");
+    $stmt = $db->prepare("INSERT INTO `commentaire` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES (?,?,?,?,?,?);");
     // attribution des variables
     // $stmt->bindValue(1,$email,PDO::PARAM_STR);
     // $stmt->bindValue(2,$full_name);
@@ -64,7 +64,7 @@ function addGuestbook(PDO $db,
     // $stmt->bindValue(4,$text_comment);
 
     // insertion
-    $insert = $stmt->execute([$useremail,$firstname,$lastname,$phone,$postcode,$message]);
+    $insert = $stmt->execute([$usermail,$firstname,$lastname,$phone,$postcode,$message]);
     // bonne pratique
     $stmt->closeCursor();
     // return envoi true si réussi, false en cas d'échec
@@ -89,14 +89,16 @@ function addGuestbook(PDO $db,
 function getAllGuestbook(PDO $db): array
 {
     // try catch
+
+
     // requête
     $stmt = $db->query("SELECT * FROM `gustbook` ORDER BY `post_date` DESC");
     // recupération des resultats en fetch_assoc (voir connexion)
-    $result = $stmt->fetchAll();
-    // bonne pratique
-    $stmt->closeCursor();
+    $result = $stmt->fetchAll();   
     // si la requête a réussi,
-    // bonne pratique, fermez le curseur
+
+    // bonne pratique, fermez le curseur 
+    $stmt->closeCursor();
     // renvoyer le tableau de(s) message(s)
     return $result;
 }
