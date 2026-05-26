@@ -89,10 +89,16 @@ function addGuestbook(PDO $db,
 function getAllGuestbook(PDO $db): array
 {
     // try catch
+    // requête
+    $stmt = $db->query("SELECT * FROM `gustbook` ORDER BY `post_date` DESC");
+    // recupération des resultats en fetch_assoc (voir connexion)
+    $result = $stmt->fetchAll();
+    // bonne pratique
+    $stmt->closeCursor();
     // si la requête a réussi,
     // bonne pratique, fermez le curseur
     // renvoyer le tableau de(s) message(s)
-    return [];
+    return $result;
 }
 
 /**************************

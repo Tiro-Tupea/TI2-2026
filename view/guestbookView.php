@@ -41,7 +41,7 @@
             <div class="line"></div>
 
             <div class="forms">
-                <form action="">
+                <form action="" method="post" id="form">
 
                     <div class="form">
                         <label for="firsname">Nom</label>
@@ -118,7 +118,22 @@
 
     <section class="right">
         <!-- Si pas de message -->
-        <h3>Pas encore de message</h3>
+        <?php if ($nbCommentaires === 0): ?>
+            <h2>Pas encore de message</h2>
+        <?php elseif ($nbCommentaires === 1): ?>
+            <h2>Il y a 1 commentaire</h2>
+        <?php else: ?>
+            <h2>Il y a <?= $nbCommentaires ?> commentaires</h2>
+        <?php endif; ?>
+
+        <?php foreach ($commentaires as $c): ?>
+            <div class="comment-card">
+                <h3><?= htmlspecialchars($c['firstname'],['lastname']) ?></h3>
+
+                <p><?= nl2br(htmlspecialchars($c['message'])) ?></p>
+            </div>
+        <?php endforeach; ?>
+
         <!-- Si 1 message -->
         <!-- <h3>Il y a 1 message</h3> -->
         <!-- Si plusieurs messages -->
