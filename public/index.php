@@ -5,8 +5,6 @@
 /*
  * Front Controller de la gestion du livre d'or
  */
-# Importer le fichier model qui contient nos fonctions de la table commentaire
-// require ROOT_PROJECT."/model/guestbookModel.php";
 
 
 /*
@@ -88,3 +86,4 @@ try{
 include URL_BASE."/view/guestbookView.php";
 
 // fermeture de la connexion (bonne pratique)
+$connectDB = null;

@@ -10,35 +10,98 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TI2 | Livre d'or</title>
     <link rel="icon" type="image/png" href="img/favicon.png">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<h1>TI2 | Livre d'or</h1>
+<header>
+<h1>Livre d'or</h1>
+
+</header>
+
 <!-- Formulaire d'ajout d'un message -->
-<h2>Ici le formulaire</h2>
-<!-- Si pas de message -->
-<h3>Pas encore de message</h3>
-<!-- Si 1 message -->
-<h3>Il y a 1 message</h3>
-<!-- Si plusieurs messages -->
-<h3>Il y a X messages</h3>
+<main>
 
-<!-- Pagination (BONUS) -->
+    <section class="left">
+        <h2>Votre message</h2>
 
-<!-- Liste des messages -->
-<ul>
-    <li>
-        <p><strong>firstname lastname</strong></p>
-        <p><em>datemessage</em></p>
-        <p>message</p>
-    </li>
-    <!-- Autres messages -->
-    <li>
-        <p><strong>firstname lastname</strong></p>
-        <p><em>datemessage</em></p>
-        <p>message</p>
-    </li>
-</ul>
+        <div class="line"></div>
+
+        <div class="forms">
+            <form action="">
+
+                <div class="form">
+                    <label for="fname">Nom</label>
+                    <input type="text">
+                </div>
+                <div class="form">
+                    <label for="lname">Prénom</label>
+                    <input type="text">
+                </div>
+                
+                <div class="form">
+                    <label for="email">E-mail</label>
+                    <input type="email">
+                </div>
+                
+                <div class="form">
+                    <label for="postCode">Code postal</label>
+                    <input type="text">
+                </div>
+                
+                <div class="form">
+                    <label for="tel">Tel.</label>
+                    <input type="text">
+                </div>
+                
+                
+                
+                
+                <div class="msg">
+                    <label for="msg">Message</label>
+                    <textarea name="msg" id=""></textarea>
+                </div>
+                <p class=nbr>0 / 300 Caractères</p>
+
+                <div class="checked">
+                    <input type="checkbox">
+                    <p>le stockage de mes données personnelles.</p>
+                </div>
+                
+                <div class="btn">
+                    <button type="submit">Envoyer le message</button>
+                </div>
+                
+            </form>
+        </div>
+    </section>
+
+    <section class="right">
+        <!-- Si pas de message -->
+        <h3>Pas encore de message</h3>
+        <!-- Si 1 message -->
+        <h3>Il y a 1 message</h3>
+        <!-- Si plusieurs messages -->
+        <h3>Il y a X messages</h3>
+
+        <!-- Pagination (BONUS) -->
+
+        <!-- Liste des messages -->
+        <ul>
+            <li>
+                <p><strong>firstname lastname</strong></p>
+                <p><em>datemessage</em></p>
+                <p>message</p>
+            </li>
+            <!-- Autres messages -->
+            <li>
+                <p><strong>firstname lastname</strong></p>
+                <p><em>datemessage</em></p>
+                <p>message</p>
+            </li>
+        </ul>
+    </section>
+    
+</main>
 etc ...
 <!-- Pagination (BONUS) -->
 <?php
