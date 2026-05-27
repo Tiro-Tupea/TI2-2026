@@ -33,7 +33,7 @@ try{
         // ! seul endroit où on peut créer une connexion permanante
         options:[
         // connexion permanante seulement ici, pas avec setAttribute()
-        // PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
 
@@ -55,17 +55,19 @@ try{
 
     if(isset($_POST['usermail'],$_POST['firstname'],$_POST['lastname'],$_POST['phone'],$_POST['postcode'],$_POST['message'])){
     // tentative d'insertion (protections dans la fonction)
-    $insert = addGuestbook(
-            db:$connectDB,
-            usermail:$_POST['usermail'],
-            firstname:$_POST['firstname'],
-            lastname:$_POST['lastname'],
-            phone:$_POST['phone'],
-            postcode:$_POST['postcode'],
-            message:$_POST['message']  
-            );
+        $insert = addGuestbook(
+                db:$connectDB,
+                usermail:   $_POST['usermail'],
+                firstname:  $_POST['firstname'],
+                lastname:   $_POST['lastname'],
+                phone:      $_POST['phone'],
+                postcode:   $_POST['postcode'],
+                message:    $_POST['message']  
+                );
+
         if($insert){
-            header("Location: index.php");
+            // header("Location: index.php");
+            var_dump("Bravo !");
         }else {
         // sinon, on affiche un message d'erreur
         var_dump("error");
@@ -83,6 +85,7 @@ try{
 // on appelle la fonction de récupération de la DB (getAllGuestbook())
     
     $message = getAllGuestbook($connectDB);
+
 /*********************
  * Ou Bonus Pagination
  *********************/

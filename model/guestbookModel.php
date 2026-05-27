@@ -56,19 +56,19 @@ function addGuestbook(PDO $db,
     ) return false;
 
     // préparation de la requête avec des marqueurs non nommés
-    $stmt = $db->prepare("INSERT INTO `guestbook` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES(:usermail,:firstname,:lastname,:phone,:postcode,:message); 
-    ");
+    $stmt = $db->prepare("INSERT INTO `guestbook` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES(:usermail,:firstname,:lastname,:phone,:postcode,:message);");
     # on met nos val dans 
-    $prepare->bindValue(':usermail',$usermail);
-    $prepare->bindValue(':firstname',$firstname);
-    $prepare->bindValue(':lastname',$lastname);
-    $prepare->bindValue(':phone',$phone);
-    $prepare->bindValue(':postcode',$message); 
+    $stmt->bindValue(':usermail',$usermail);
+    $stmt->bindValue(':firstname',$firstname);
+    $stmt->bindValue(':lastname',$lastname);
+    $stmt->bindValue(':phone',$phone);
+    $stmt->bindValue(':postcode',$postcode); 
+    $stmt->bindValue(':message',$message); 
 
-    # on exécute la requete
+    # on exécute la requete [$usermail,$firstname,$lastname,$phone,$postcode,$message]
 
     //insertion
-    $insert = $stmt->execute([$usermail,$firstname,$lastname,$phone,$postcode,$message]);
+    $insert = $stmt->execute();
     // bonne pratique
     $stmt->closeCursor();
     // return envoi true si réussi, false en cas d'échec
