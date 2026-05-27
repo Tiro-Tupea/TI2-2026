@@ -52,9 +52,10 @@ try{
 
 // on appelle la fonction d'insertion dans la DB (addGuestbook())
     # formulaire envoyé au backend
+
     if(isset($_POST['usermail'],$_POST['firstname'],$_POST['lastname'],$_POST['phone'],$_POST['postcode'],$_POST['message'])){
     // tentative d'insertion (protections dans la fonction)
-    $insert = getAllGuestbook(
+    $insert = addGuestbook(
             db:$connectDB,
             usermail:$_POST['usermail'],
             firstname:$_POST['firstname'],
@@ -63,24 +64,25 @@ try{
             postcode:$_POST['postcode'],
             message:$_POST['message']  
             );
-            // redirection vers commentaire
-        header("Location: index.php");
+        if($insert){
+            header("Location: index.php");
+        }else {
+        // sinon, on affiche un message d'erreur
+        var_dump("error");
+        }
+            // redirection vers index
+            // si l'insertion a réussi
+
+            // on redirige vers la page actuelle (ou on affiche un message de succès)
     }
-
-
-
-// si l'insertion a réussi
-
-// on redirige vers la page actuelle (ou on affiche un message de succès)
-
-// sinon, on affiche un message d'erreur
 
 /*
  * On récupère les messages du livre d'or
  */
 
 // on appelle la fonction de récupération de la DB (getAllGuestbook())
-
+    
+    $message = getAllGuestbook($connectDB);
 /*********************
  * Ou Bonus Pagination
  *********************/

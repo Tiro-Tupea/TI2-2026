@@ -128,12 +128,16 @@
         <!-- Pagination (BONUS) -->
 
         <!-- Liste des messages -->
+        
         <ul>
-            <li>
-                <p><strong>firstname lastname</strong></p>
-                <p><em>datemessage</em></p>
-                <p>message</p>
-            </li>
+            <?php foreach ($message as $m): ?>
+                <li>
+                    <p><strong><?= htmlspecialchars($m['firstname'], $m['lastname']) ?></strong></p>
+                    <p><em><?= htmlspecialchars($m['datemessage']) ?></em></p>
+                    <p><?= nl2br(htmlspecialchars($m['message'])) ?></p>
+                </li>
+            <?php endforeach; ?>
+
             <!-- Autres messages -->
             <li>
                 <p><strong>firstname lastname</strong></p>

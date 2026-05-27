@@ -38,39 +38,43 @@ function addGuestbook(PDO $db,
     $message=htmlspecialchars(trim(strip_tags($message)));
     
     // on envoie false si il y a une seule erreur
-      if($usermail===false       ||
-    strlen($usermail)>100        ||
+      if($usermail===false        ||
+    strlen($usermail)>=100        ||
     empty($firstname)             ||
     strlen($fitsname)<5           ||
-    strlen($full_name)>100        ||
+    strlen($full_name)>=100       ||
     empty($lastname)              ||
     strlen($lastname)<5           ||
-    strlen($lastname)>100         ||
+    strlen($lastname)>=100        ||
     empty($phone)                 ||
     strlen($phone)>2              ||
     empty($postcode)              ||
     strlen($postcode)>5           ||
     empty($message)               ||
     strlen($message)<5            ||
-    strlen($message)>500   
+    strlen($message)>=500   
     ) return false;
 
     // préparation de la requête avec des marqueurs non nommés
-    $stmt = $db->prepare("INSERT INTO `commentaire` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES (?,?,?,?,?,?);");
-    // attribution des variables
-    // $stmt->bindValue(1,$email,PDO::PARAM_STR);
-    // $stmt->bindValue(2,$full_name);
-    // $stmt->bindValue(3,$title);
-    // $stmt->bindValue(4,$text_comment);
+    $stmt = $db->prepare("INSERT INTO `guestbook` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES(:usermail,:firstname,:lastname,:phone,:postcode,:message); 
+    ");
+    # on met nos val dans 
+    $prepare->bindValue(':usermail',$usermail);
+    $prepare->bindValue(':firstname',$firstname);
+    $prepare->bindValue(':lastname',$lastname);
+    $prepare->bindValue(':phone',$phone);
+    $prepare->bindValue(':postcode',$message); 
 
-    // insertion
+    # on exécute la requete
+
+    //insertion
     $insert = $stmt->execute([$usermail,$firstname,$lastname,$phone,$postcode,$message]);
     // bonne pratique
     $stmt->closeCursor();
     // return envoi true si réussi, false en cas d'échec
     return $insert;
     // si pas de données complètes ou ne correspondant pas à nos attentes, on renvoie false
-    return false;
+    // return false;
    
 }
 
@@ -89,17 +93,21 @@ function addGuestbook(PDO $db,
 function getAllGuestbook(PDO $db): array
 {
     // try catch
+    try{
+        // requête
+        $stmt = $db->query("SELECT * FROM `guestbook` ORDER BY `datemessage` DESC");
+        // recupération des resultats en fetch_assoc (voir connexion)
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);   
+        // si la requête a réussi,
 
-
-    // requête
-    $stmt = $db->query("SELECT * FROM `gustbook` ORDER BY `post_date` DESC");
-    // recupération des resultats en fetch_assoc (voir connexion)
-    $result = $stmt->fetchAll();   
-    // si la requête a réussi,
-
-    // bonne pratique, fermez le curseur 
-    $stmt->closeCursor();
-    // renvoyer le tableau de(s) message(s)
+        // bonne pratique, fermez le curseur 
+        $stmt->closeCursor();
+        // renvoyer le tableau de(s) message(s)
+        
+    }catch(Exception $e){
+    // arrêt et affichage de l'erreur (en dev)
+    die($e->getMessage());
+    }
     return $result;
 }
 
@@ -147,7 +155,7 @@ function getGuestbookPagination(PDO $db, int $pageActu=1, int $limit=5): array
     // bonne pratique, fermez le curseur
     // renvoyer le tableau de(s) message(s) (vide si pas de résultats)
     // requête prépare
-    $stmt = $db->prepare("SELECT * FROM `guestbook` ORDER BY `post_date` DESC LIMIT :offset, :limit;");
+    $stmt = $db->prepare("SELECT * FROM `guestbook` ORDER BY `datemessage` DESC LIMIT :offset, :limit;");
     // utilisation obligatoire de bindParam ou bindValue
     $stmt->bindValue(":offset",$offset,PDO::PARAM_INT);
     $stmt->bindValue(":limit",$limit,PDO::PARAM_INT);
