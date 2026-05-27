@@ -41,8 +41,8 @@ function addGuestbook(PDO $db,
       if($usermail===false        ||
     strlen($usermail)>=100        ||
     empty($firstname)             ||
-    strlen($fitsname)<5           ||
-    strlen($full_name)>=100       ||
+    strlen($firstname)<5          ||
+    strlen($firstname)>=100       ||
     empty($lastname)              ||
     strlen($lastname)<5           ||
     strlen($lastname)>=100        ||
@@ -55,6 +55,8 @@ function addGuestbook(PDO $db,
     strlen($message)>=500   
     ) return false;
 
+    var_dump('hello world');
+
     // préparation de la requête avec des marqueurs non nommés
     $stmt = $db->prepare("INSERT INTO `guestbook` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES(:usermail,:firstname,:lastname,:phone,:postcode,:message);");
     # on met nos val dans 
@@ -65,10 +67,10 @@ function addGuestbook(PDO $db,
     $stmt->bindValue(':postcode',$postcode); 
     $stmt->bindValue(':message',$message); 
 
-    # on exécute la requete [$usermail,$firstname,$lastname,$phone,$postcode,$message]
+    # on exécute la requete 
 
     //insertion
-    $insert = $stmt->execute();
+    $insert = $stmt->execute(); //[$usermail,$firstname,$lastname,$phone,$postcode,$message]
     // bonne pratique
     $stmt->closeCursor();
     // return envoi true si réussi, false en cas d'échec

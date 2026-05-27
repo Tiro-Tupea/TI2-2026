@@ -33,7 +33,7 @@ try{
         // ! seul endroit où on peut créer une connexion permanante
         options:[
         // connexion permanante seulement ici, pas avec setAttribute()
-            PDO::ATTR_PERSISTENT => true,
+            //PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
 
@@ -83,8 +83,9 @@ try{
  */
 
 // on appelle la fonction de récupération de la DB (getAllGuestbook())
-    
-    $message = getAllGuestbook($connectDB);
+
+
+$message = getAllGuestbook($connectDB);
 
 /*********************
  * Ou Bonus Pagination
