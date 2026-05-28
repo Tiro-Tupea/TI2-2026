@@ -28,50 +28,7 @@
        les messages d'erreur (rouge) ou de succès (vert).
      - Un bouton <button id="toggle-theme"></button> pour basculer le thème.
 
-   ============================================================================
-   PARTIE 2 — VALIDATION JAVASCRIPT (jQuery OBLIGATOIRE)
-   ============================================================================
-
-   Au clic sur le bouton d'envoi, vérifier CHAQUE champ.
-   Si un champ ne respecte pas sa condition, afficher un message EN ROUGE
-   en haut du formulaire, dans la zone #messages.
-   Si TOUS les champs sont valides, afficher un message EN VERT et envoyer
-   le formulaire (qui sera traité par PHP — voir partie 3).
-
-   --- RÈGLES DE VALIDATION ---
-
-   1) Nom et Prénom
-      - Champs obligatoires (non vides)
-      - Au moins 2 caractères
-
-   2) Email
-      - Champ obligatoire
-      - Doit respecter le format d'une adresse email valide
-        (utiliser une expression régulière — regex)
-
-   3) Code postal belge
-      - 4 chiffres exactement
-      - Compris entre 1000 et 9999
-
-   4) Numéro de téléphone belge
-      - Doit accepter les formats suivants :
-          • 0470123456
-          • 0470 12 34 56
-          • +32 470 12 34 56
-          • 0032470123456
-      - Indice : nettoyer la chaîne (enlever espaces, tirets, points)
-        AVANT de tester avec une regex
-
-   5) Message
-      - Champ obligatoire
-      - Au moins 10 caractères
-
-   --- AFFICHAGE DES MESSAGES ---
-
-   - Tous les messages d'erreur s'affichent dans la zone #messages,
-     en haut du formulaire.
-   - Couleur rouge pour les erreurs, couleur verte pour le succès.
-   - Vider la zone à chaque nouvelle tentative d'envoi.
+   
 
    ============================================================================
    PARTIE 3 — TRAITEMENT CÔTÉ PHP
@@ -86,25 +43,8 @@
    Note : pour cet exercice, le PHP peut simuler la réussite/échec
    (par exemple, vérifier que les variables $_POST sont bien remplies).
 
-   ============================================================================
-   PARTIE 4 — DARK MODE
-   ============================================================================
-
-   Créer un bouton qui permet de basculer entre deux thèmes :
-
-     ☀️ Mode clair  → body avec fond BLANC
-     🌙 Mode sombre → body avec fond NOIR
-
-   COMPORTEMENT DU BOUTON :
-   - Le texte du bouton change dynamiquement :
-       • "🌙 Dark Mode"  quand on est en mode clair (clic = passer en sombre)
-       • "☀️ White Mode" quand on est en mode sombre (clic = passer en clair)
-   - L'icône doit correspondre au mode vers lequel on bascule.
-
-   IMPLÉMENTATION SUGGÉRÉE :
-   - Utiliser une classe CSS (ex : .dark-mode) sur le <body>.
-   - Faire le toggle de cette classe en jQuery avec .toggleClass().
-   - Mettre à jour le texte du bouton après chaque toggle.
+  
+   
 
    ============================================================================
    PARTIE 5 — BONUS
@@ -141,3 +81,96 @@
    Bon travail !
    ========================================================================= */
 
+  //  ============================================================================
+  //  PARTIE 2 — VALIDATION JAVASCRIPT (jQuery OBLIGATOIRE)
+  //  ============================================================================
+
+  //  Au clic sur le bouton d'envoi, vérifier CHAQUE champ.
+  //  Si un champ ne respecte pas sa condition, afficher un message EN ROUGE
+  //  en haut du formulaire, dans la zone #messages.
+  //  Si TOUS les champs sont valides, afficher un message EN VERT et envoyer
+  //  le formulaire (qui sera traité par PHP — voir partie 3).
+
+  //  --- RÈGLES DE VALIDATION ---
+
+  //  1) Nom et Prénom
+  //     - Champs obligatoires (non vides)
+  //     - Au moins 2 caractères
+
+  //  2) Email
+  //     - Champ obligatoire
+  //     - Doit respecter le format d'une adresse email valide
+  //       (utiliser une expression régulière — regex)
+
+  //  3) Code postal belge
+  //     - 4 chiffres exactement
+  //     - Compris entre 1000 et 9999
+
+  //  4) Numéro de téléphone belge
+  //     - Doit accepter les formats suivants :
+  //         • 0470123456
+  //         • 0470 12 34 56
+  //         • +32 470 12 34 56
+  //         • 0032470123456
+  //     - Indice : nettoyer la chaîne (enlever espaces, tirets, points)
+  //       AVANT de tester avec une regex
+
+  //  5) Message
+  //     - Champ obligatoire
+  //     - Au moins 10 caractères
+
+  //  --- AFFICHAGE DES MESSAGES ---
+
+  //  - Tous les messages d'erreur s'affichent dans la zone #messages,
+  //    en haut du formulaire.
+  //  - Couleur rouge pour les erreurs, couleur verte pour le succès.
+  //  - Vider la zone à chaque nouvelle tentative d'envoi.
+
+
+    let Valide = true;
+    let regName = /^[a-zA-Z].*[\s\.]*$/.test(); // Name
+    let regMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(); // email
+    let regTel  = /^[0-9]+$/.test(); // Tel
+    let regPost = /^[0-4]+$/.test(); // postCode
+
+    let prenom   = $("#firstname").val().trim();
+    let nom      = $("#lastname").val().trim();
+    let mail     = $("#usermail").val().trim();
+    let postcode = $("#postcode").val().trim();
+    let phone    = $("#phone").val().trim();
+    let msg      = $("#message").val().trim();
+
+
+
+
+  //  ============================================================================
+  //  PARTIE 4 — DARK MODE
+  //  ============================================================================
+
+  $("#dark-mode").click(function(){
+    $("body").toggleClass('dark');
+  });
+
+  // Créer un bouton qui permet de basculer entre deux thèmes :
+
+  //    ☀️ Mode clair  → body avec fond BLANC
+  //    🌙 Mode sombre → body avec fond NOIR
+
+  //  COMPORTEMENT DU BOUTON :
+  //  - Le texte du bouton change dynamiquement :
+  //      • "🌙 Dark Mode"  quand on est en mode clair (clic = passer en sombre)
+  //      • "☀️ White Mode" quand on est en mode sombre (clic = passer en clair)
+  //  - L'icône doit correspondre au mode vers lequel on bascule.
+
+  //  IMPLÉMENTATION SUGGÉRÉE :
+  //  - Utiliser une classe CSS (ex : .dark-mode) sur le <body>.
+  //  - Faire le toggle de cette classe en jQuery avec .toggleClass().
+  //  - Mettre à jour le texte du bouton après chaque toggle.
+
+  // let darkMode = document.getElementById('dark-mode');
+  // let darkBody = document.body;
+  
+
+  // darkMode.addEventListener("click",(e) => {
+  //   darkBody.classList.toggle('dark');
+  // });
