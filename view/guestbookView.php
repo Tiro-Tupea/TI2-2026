@@ -39,6 +39,7 @@
         </div>
          <div class="left-form">
             <h2>Votre message</h2>
+            <p class="sended"><b>Votre Mesagge c'est envoyer &#128077 </b></p>
 
             <div class="line"></div>
 
@@ -46,73 +47,76 @@
                 <form action="" method="post" id="form">
 
                     <div class="form">
-                        <label for="lastname">Nom</label>
-                        <input type="text" name="lastname" id="lastname"
-                        value="<?= htmlspecialchars($_POST['lastname'] ?? '') ?>" placeholder="Nom" required>
+                        <label for="lastname">Nom </label>
 
-                        <?php if (!empty($errors['lastname'])): ?>
-                            <p class="error"><?= $errors['lastname'] ?></p>
-                        <?php endif; ?>
+                        <div class="error-container">
+                            <input type="text" name="lastname" id="lastname" value="<?= htmlspecialchars($_POST['lastname'] ?? '') ?>" placeholder="Nom" required>
+                            <span class="errors">Nom invalide</span>
+                        </div>
                         
                     </div>
-                    <span class="errors">Nom invalide</span>
+                    
 
                     <div class="form">
-                        <label for="firstname">Prénom</label>
-                        <input type="text" name="firstname" id="firstname" value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>" placeholder="Prénom" required>
+                        <label for="firstname">Prénom </label>
 
-                        <?php if (!empty($errors['firstname'])): ?>
-                            <p class="error"><?= $errors['firstname'] ?></p>
-                        <?php endif; ?>
+                        <div class="error-container">
+                            <input type="text" name="firstname" id="firstname" value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>" placeholder="Prénom" required>
+                            <span class="errors">Prénom invalide</span>
+                        </div>
+
                         
                     </div>
-                    <span class="errors">Prénom invalide</span>
+                    
 
                     <div class="form">
-                        <label for="usermail">E-mail</label>
-                        <input type="email" name="usermail" id="usermail" value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>" placeholder="youre_email@gmail.com" required>
+                        <label for="usermail">E-mail </label>
 
-                        <?php if (!empty($errors['usermail'])): ?>
-                            <p class="error"><?= $errors['usermail'] ?></p>
-                        <?php endif; ?>
+                        <div class="error-container">
+                            <input type="email" name="usermail" id="usermail" value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>" placeholder="youre_email@gmail.com" required>
+                            <span class="errors">E-mail invalide</span>
+                        </div>
+
                         
                     </div>
-                    <span class="errors">E-mail invalide</span>
+                    
 
                     <div class="form">
-                        <label for="postcode">Code postal</label>
-                        <input type="text" name="postcode" id="postcode" value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>" placeholder="Exp: 1000" required>
+                        <label for="postcode">Code postal </label>
 
-                        <?php if (!empty($errors['postcode'])): ?>
-                            <p class="error"><?= $errors['postcode'] ?></p>
-                        <?php endif; ?>
+                        <div class="error-container">
+                            <input type="text" name="postcode" id="postcode" value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>" placeholder="Exp: 1000" required>
+                            <span class="errors">Code postal invalide</span>
+                        </div>
+
                         
                     </div>
-                    <span class="errors">Code postal invalide</span>
+                    
 
                     <div class="form">
-                        <label for="phone">Tel.</label>
-                        <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" placeholder="00000000" required>
+                        <label for="phone">Tel. </label>
 
-                        <?php if (!empty($errors['phone'])): ?>
-                            <p class="error"><?= $errors['phone'] ?></p>
-                        <?php endif; ?>
-                        
+                        <div class="error-container">
+                            <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" placeholder="00000000" required>
+                            <span class="errors">Tel. invalide</span>
+                        </div>
+
                     </div>
-                    <span class="errors">Tel. invalide</span>
+                    
                     
                     
                     <div class="msg">
-                        <label for="message">Message</label>
-                        <textarea name="message" id="message" placeholder="Votre message"><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+                        <label for="message">Message </label>
 
-                        <?php if (!empty($errors['message'])): ?>
-                            <p class="error"><?= $errors['message'] ?></p>
-                        <?php endif; ?>
+                        <div class="error-container">
+                            <textarea name="message" id="message" placeholder="Votre message" required><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+                            <span class="errors">Message invalide</span>
+                        </div>
+
                         
                     </div>
-                    <span class="errors">Message invalide</span>
-                    <p class=nbr>0 / 300 Caractères</p>
+                    
+                    <p class=nbr><span id="count">0</span> / 300 Caractères</p>
 
                     <div class="checked">
                         <input type="checkbox">
@@ -120,7 +124,7 @@
                     </div>
                     
                     <div class="btn">
-                        <button class="btnSub" type="submit">Envoyer le message</button>
+                        <button class="btnSub" id="btnSub" type="submit">Envoyer le message</button>
                     </div>
                     
                 </form>

@@ -65,16 +65,16 @@ try{
                 message:    $_POST['message']  
                 );
 
-        if($insert){
-            // header("Location: index.php");
-            var_dump("Bravo !");
-        }else {
-        // sinon, on affiche un message d'erreur
-        var_dump("error");
-        }
+        // if($insert){
+        //     //
+        //     var_dump("Bravo !");
+        // }else {
+        // // sinon, on affiche un message d'erreur
+        // var_dump("error");
+        // }
             // redirection vers index
             // si l'insertion a réussi
-
+            header("Location: index.php");
             // on redirige vers la page actuelle (ou on affiche un message de succès)
     }
 

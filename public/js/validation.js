@@ -127,20 +127,107 @@
   //  - Vider la zone à chaque nouvelle tentative d'envoi.
 
 
-    let Valide = true;
-    let regName = /^[a-zA-Z].*[\s\.]*$/.test(); // Name
-    let regMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(); // email
-    let regTel  = /^[0-9]+$/.test(); // Tel
-    let regPost = /^[0-4]+$/.test(); // postCode
+    
+    const regName = /^[a-zA-Z].*[\s\.]*$/; // Name
+    const regMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // email
+    const regTel  = /^[0-9]+$/; // Tel
+    const regPost = /^[0-4]+$/; // postCode
 
-    let prenom   = $("#firstname").val().trim();
-    let nom      = $("#lastname").val().trim();
-    let mail     = $("#usermail").val().trim();
-    let postcode = $("#postcode").val().trim();
-    let phone    = $("#phone").val().trim();
-    let msg      = $("#message").val().trim();
+    let prenom   = $("#firstname");
+    let nom      = $("#lastname");
+    let mail     = $("#usermail");
+    let postcode = $("#postcode");
+    let phone    = $("#phone");
+    let msg      = $("#message");
+    let error    = $(".errors");
+    let form     = $(".form");
+    let btnSub   = $("#btnSub");
+    let valide   = $(".sended");
+
+    // form.next().css("display", "block");
+
+    console.log(prenom);
 
 
+    // compte le nombre caractère dans le champ message
+    let i = 0;
+      $(document).ready(function(){
+       msg.on("keyup", function(e){
+          if(e.keyCode==8){
+            $("#count").text(i -= 1);
+          }else{
+            $("#count").text(i += 1);
+          }
+        });
+      });
+
+
+    btnSub.on("click", (e) =>{
+      // e.preventDefault();
+
+      // Validation Champ Nom
+      if (!regName.test(nom.val().trim()) || ""){
+        console.log('refuseyyyy')
+        nom.next().css("display", "block");
+        return;
+      }else {
+        nom.next().css("display", "none");
+      }
+
+      // Validation champ Prénom
+      if (!regName.test(prenom.val().trim()) || ""){
+        console.log('refuseyyyy');
+        prenom.next().css("display", "block");
+        return;
+      }else {
+        prenom.next().css("display", "none");
+      }
+
+      // Validation e-mail
+      if (!regMail.test(mail.val().trim()) || ""){
+        console.log('refuseyyyy');
+        mail.next().css("display", "block");
+        return;
+      } else{
+        mail.next().css("display", "none");
+      }
+
+      //validation Tel.
+      if (!regTel.test(phone.val().trim()) || ""){
+        console.log('refuseyyyy');
+        phone.next().css("display", "block");
+        return;
+      } else {
+        phone.next().css("display", "none");
+      }
+
+      // Validation Code postal
+      if (!regPost.test(postcode.val().trim()) || ""){
+        console.log('refuseyyyy');
+        postcode.next().css("display", "block");
+        return;
+      } else {
+        prenom.next().css("display", "none");
+      }
+
+      // Validation Message
+      if (!regName.test(msg.val().trim()) || ""){
+        console.log('refuseyyyy');
+        msg.next().css("display", "block");
+        return;
+      } else {
+        msg.next().css("display", "none");
+        
+      }
+
+      
+      // Si Succès
+      console.log("c'est Valideyyyyy");
+      valide.css("display", "block");
+      
+    });
+    
+    
 
 
   //  ============================================================================

@@ -54,7 +54,7 @@ function addGuestbook(PDO $db,
     strlen($message)>=500   
     ) return false;
 
-    var_dump('hello world');
+    // var_dump('hello world');
 
     // préparation de la requête avec des marqueurs non nommés
     $stmt = $db->prepare("INSERT INTO `guestbook` (`usermail`, `firstname`, `lastname`, `phone`, `postcode`,`message`) VALUES(:usermail,:firstname,:lastname,:phone,:postcode,:message);");
